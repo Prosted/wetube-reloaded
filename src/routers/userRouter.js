@@ -8,6 +8,6 @@ const usersRouter = express.Router();
 usersRouter.get("/logout", logout);
 usersRouter.get("/edit", edit);
 usersRouter.get("/delete", remove);
-usersRouter.get(":id", see);
+usersRouter.get("/:id", see);
 
 export default usersRouter;

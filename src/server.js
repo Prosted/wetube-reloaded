@@ -10,6 +10,11 @@ const app = express(); //express함수로 익스프레스 앱을 만듬
 
 const logger = morgan("combined");
 
+console.log(process.cwd());
+app.set("views", process.cwd() + "/src/views");
+app.set("view engine", "pug");
+
+//app.use(logger);
 app.use("/", globalRouter);
 app.use("/users", usersRouter);
 app.use("/videos", videoRouter);

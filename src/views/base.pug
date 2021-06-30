@@ -5,19 +5,8 @@ html(lang = "ko")
         link(link rel="stylesheet" href="https://unpkg.com/mvp.css") 
         //mvp css 사용
     body
-        header
-            if fakeUser.loggedIn 
-                small Hello #{fakeUser.username}
-            nav
-                ul
-                    if fakeUser.loggedIn
-                        li 
-                            a(href="/Logout") Logout
-                    else
-                        li 
-                            a(herf="/Login") Login
+        main
             h1=pageTitle 
             //pageTitle 변수를 html에 집어넣을 수 있음. #{pageTitle}과 똑같지만 방법만 다름 
-        main
             block content
             include partials/footer.pug

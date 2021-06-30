@@ -1,6 +1,12 @@
+const fakeUser = {
+    username : "seongchan",
+    loggedIn : false,
+}; //임시로 만든 가짜 유저 오브젝트
+
+
 //global Router
 export const trending = (req, res) => {
-    res.render("home", {pageTitle : "Home", potato : "I love Potato"}); //render은 2가지 인수를 받는데, 첫번째는 view의 이름이고 두번째는 템플릿에 보낼 변수다. 변수는 원하는 만큼 보낼 수 있다.
+    res.render("home", {pageTitle : "Home", fakeUser : fakeUser}); //render은 2가지 인수를 받는데, 첫번째는 view의 이름이고 두번째는 템플릿에 보낼 오브젝트다. 오브젝트 안 변수는 원하는 만큼 보낼 수 있다.
 } 
 export const search = (req, res) => res.send("Search Video");
 

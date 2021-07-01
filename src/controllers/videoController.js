@@ -4,7 +4,7 @@ let videos = [
         rating : 5,
         comments : 2,
         createdAt : "2 minutes ago",
-        views : 59,
+        views : 1,
         id : 1
     },
     {
@@ -20,7 +20,7 @@ let videos = [
         rating : 5,
         comments : 2,
         createdAt : "2 minutes ago",
-        views : 59,
+        views : 101,
         id : 3
     },
 ];
@@ -36,7 +36,7 @@ export const upload = (req, res) => res.send("Upload Video");
 export const watch = (req, res) => {
     const {id} = req.params;
     const video = videos[id-1];
-    return res.render("watch", {pageTitle : `watch ${video.title}`});
+    return res.render("watch", {pageTitle : `watch ${video.title}`, video});
 };
 export const edit = (req, res) => {
     res.render("edit");

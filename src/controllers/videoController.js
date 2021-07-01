@@ -45,7 +45,7 @@ export const getEdit = (req, res) => {
 };
 
 export const postEdit = (req, res) => {
-    //pass
+   res.end();
 }
 
 export const deleteVideo = (req, res) =>{

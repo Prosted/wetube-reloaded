@@ -15,16 +15,10 @@ export const home = (req, res) => {
 */
 
 //동기처리방식 async & await
-export const home = async(req, res) => { //await를 쓰기 위해 async를 쓰기로 규칙이 되어있다.
-    try{ //콜백과 다르게 에러를 알아보기 힘들기 때문에 에러처리를 위해 try catch를 사용한다.
-        const videos = await Video.find({}); //find함수가 다 처리 되기 전 까지 자바스크립트가 아래 코드를 실행하지 않고 기다려줌
-        res.render("home", {pageTitle : "Home", videos});
-    }catch(error){
-        return res.render("server-error");
-    }
-} 
-
-
+export const home = async(req, res) => { 
+    const videos = await Video.find({});
+    return res.render("home", {pageTitle : "Home", videos : []});
+} //render, redirect같은 함수들은 호출 후 다른 함수 호출을 허용하지 않는다. 예를 들어 render함수 밑에 redirect함수를 적었다면 에러가 발생한다. 함수에 따라 아래에 코드를 적으면 안되는 사례가 있기 때문에 return을 쓰지 않아도 render 함수 만으로도 함수를 끝낼 수 있다. 다만 return은 함수를 끝내므로 render 옆에 return을 붙여 아래 코드에 대한 접근을 막아 실수를 방지할 수 있다. 결론 : render이나 redirect같은 함수는 한번더 함수호출하는걸 허용하지 않고 함수에 따라 return은 생략가능
 
 //video Router
 

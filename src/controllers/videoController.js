@@ -18,7 +18,7 @@ export const home = (req, res) => {
 export const home = async(req, res) => { 
     const videos = await Video.find({});
     return res.render("home", {pageTitle : "Home", videos : []});
-} //render, redirect같은 함수들은 호출 후 다른 함수 호출을 허용하지 않는다. 예를 들어 render함수 밑에 redirect함수를 적었다면 에러가 발생한다. 함수에 따라 아래에 코드를 적으면 안되는 사례가 있기 때문에 return을 쓰지 않아도 render 함수 만으로도 함수를 끝낼 수 있다. 다만 return은 함수를 끝내므로 render 옆에 return을 붙여 아래 코드에 대한 접근을 막아 실수를 방지할 수 있다. 결론 : render이나 redirect같은 함수는 한번더 함수호출하는걸 허용하지 않고 함수에 따라 return은 생략가능
+}
 
 //video Router
 
@@ -44,7 +44,17 @@ export const getUpload = (req, res) => {
 }
 
 export const postUpload = (req, res) => {
-    const {title} = req.body;
-    res.redirect("/");
-
+    const {title, description, hashtags} = req.body;
+    const video = new Video({
+        title,
+        description,
+        createdAt : Date.now(),
+        hashtags : hashtags.split(",").map((word)=>`#${word}`),
+        meta : {
+            views : 0,
+            rating : 0,
+        },
+    });
+    console.log(video);
+    return res.redirect("/");
 }

@@ -17,7 +17,8 @@ export const home = (req, res) => {
 //동기처리방식 async & await
 export const home = async(req, res) => { 
     const videos = await Video.find({});
-    return res.render("home", {pageTitle : "Home", videos : []});
+    console.log(videos);
+    return res.render("home", {pageTitle : "Home", videos});
 }
 
 //video Router
@@ -43,8 +44,10 @@ export const getUpload = (req, res) => {
     res.render("upload", {pageTitle : "Upload"});
 }
 
-export const postUpload = (req, res) => {
+export const postUpload = async(req, res) => {
     const {title, description, hashtags} = req.body;
+    //데이터베이스에 저장하는 첫번째 방법
+    /*
     const video = new Video({
         title,
         description,
@@ -55,6 +58,18 @@ export const postUpload = (req, res) => {
             rating : 0,
         },
     });
-    console.log(video);
+    await video.save();
+    */
+   //두번째 방법이자 위 과정을 단축하는 방법
+    await Video.create({
+        title,
+        description,
+        createdAt : Date.now(),
+        hashtags : hashtags.split(",").map((word)=>`#${word}`),
+        meta : {
+            views : 0,
+            rating : 0,
+        },
+    });
     return res.redirect("/");
 }

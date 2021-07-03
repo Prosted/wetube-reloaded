@@ -46,30 +46,14 @@ export const getUpload = (req, res) => {
 
 export const postUpload = async(req, res) => {
     const {title, description, hashtags} = req.body;
-    //데이터베이스에 저장하는 첫번째 방법
-    /*
-    const video = new Video({
-        title,
-        description,
-        createdAt : Date.now(),
-        hashtags : hashtags.split(",").map((word)=>`#${word}`),
-        meta : {
-            views : 0,
-            rating : 0,
-        },
-    });
-    await video.save();
-    */
-   //두번째 방법이자 위 과정을 단축하는 방법
-    await Video.create({
-        title,
-        description,
-        createdAt : Date.now(),
-        hashtags : hashtags.split(",").map((word)=>`#${word}`),
-        meta : {
-            views : 0,
-            rating : 0,
-        },
-    });
-    return res.redirect("/");
+    try{
+        await Video.create({
+            title,
+            description,
+            hashtags : hashtags.split(",").map((word)=>`#${word}`)
+        });
+        return res.redirect("/");
+    }catch(error){
+        return res.render("upload", {pageTitle: "upload", errorMessage : error._message});
+    }
 }

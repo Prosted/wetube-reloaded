@@ -2,8 +2,8 @@ extends base
 
 
 block content 
-    h3 #{video.views} #{video.views === 1 ? "view" : "views"}
-    //ternary operator(삼항연산자)를 사용해 string 반환 
-    a(href=`${video.id}/edit`) Edit Video &rarr;
-    //- relative url = url 맨 앞에 /를 적지 않는다. 기존경로 유지 예) href = "potato" --> localhost:4000/videos/3/potato
-    //- absolute url = url 맨 앞에 /를 적는다. 경로가 root + 경로로 수정된다. 예) href = "/potato" --> localhost:4000/potato
+    div
+        p=video.description
+        small=video.createdAt
+    a(href=`${video.id}/edit`) Edit Video
+

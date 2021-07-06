@@ -3,17 +3,18 @@ html(lang = "ko")
     head
         title #{pageTitle} | Wetube
         link(link rel="stylesheet" href="https://unpkg.com/mvp.css") 
-        //mvp css 사용
+
     body
         header
             h1=pageTitle
-            //pageTitle 변수를 html에 집어넣을 수 있음. #{pageTitle}과 똑같지만 방법만 다름 
             nav 
                 ul 
                     li
                         a(href="/videos/upload") Upload Video
                     li 
                         a(href="/") Home
+                    li 
+                        a(href="/search") Search
         main
             block content
         include partials/footer

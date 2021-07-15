@@ -1,7 +1,7 @@
 
 import express from "express"; //express로부터 express를 불러옴
 import morgan from "morgan";
-import globalRouter from "./routers/globalRouter";
+import rootRouter from "./routers/rootRouter";
 import usersRouter from "./routers/userRouter";
 import videoRouter from "./routers/videoRouter";
 
@@ -16,7 +16,7 @@ app.set("view engine", "pug");
 
 //app.use(logger);
 app.use(express.urlencoded({extended:true}));
-app.use("/", globalRouter);
+app.use("/", rootRouter);
 app.use("/users", usersRouter);
 app.use("/videos", videoRouter);
 

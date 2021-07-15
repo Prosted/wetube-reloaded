@@ -1,5 +1,4 @@
 import User from "../models/User";
-
 //root Router
 export const getJoin = (req, res) => { 
     res.render("join", {pageTitle : "Join"});

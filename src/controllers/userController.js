@@ -5,7 +5,25 @@ export const getJoin = (req, res) => {
 }
 
 export const postJoin = async (req, res) => {
-    const {name, email, userName, password, location} = req.body; 
+    const {name, email, userName, password, password2, location} = req.body;
+    //논리식 or을 사용한 방법
+    const exists = await User.exists({$or : [{email}, {userName}]});
+    if(exists){
+        return res.render("join", {pageTitle:"Join", errorMessage : "This username/email is already taken"});
+    }
+    if(password != password2){
+        return res.render("join", {pageTitle:"Join", errorMessage : "Password confirmation does not match"});
+    }
+    /* //중복된 이메일, 유저네임을 확인하는 방법 
+    const usernameExits = await User.exists({userName});
+    const userEmailExits = await User.exists({email});
+    if(usernameExits){
+        return res.render("join", {pageTitle:"Join", errorMessage : "This userName is already taken"});
+    }
+    if(userEmailExits){
+        return res.render("join", {pageTitle:"Join", errorMessage : "This email is already taken"});
+    } 
+    */
     await User.create({
         name,
         email,

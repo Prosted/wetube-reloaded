@@ -15,10 +15,11 @@ html(lang = "ko")
                         a(href="/") Home
                     li 
                         a(href="/search") Search
-                    li 
-                        a(href="/join") Join
-                    li 
-                        a(href="/login") Login
+                    if req.sessions.loggedIn
+                        li 
+                            a(href="/join") Join
+                        li 
+                            a(href="/login") Login
                     
         main
             block content

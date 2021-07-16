@@ -42,6 +42,8 @@ export const postLogin = async (req, res) => {
     if(!checkPassword){
         return res.status(400).render("login", {pageTitle : "Login", errorMessage : "An account with this password does not exists"});
     }
+    req.session.loggedIn = true;
+    req.session.user=user;
     res.redirect("/")
 };
 

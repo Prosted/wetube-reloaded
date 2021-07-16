@@ -2,6 +2,7 @@
 import express from "express";
 import session from "express-session";
 import morgan from "morgan";
+import { localsMiddleware } from "./middlewares";
 import rootRouter from "./routers/rootRouter";
 import usersRouter from "./routers/userRouter";
 import videoRouter from "./routers/videoRouter";
@@ -23,12 +24,14 @@ app.use(session({
     saveUninitialized : true,
 }));
 
-app.use((req, res, next)=>{
-    req.sessionStore.all((error, sessions) => {
-        console.log(sessions);
-        next();
-    });
-});
+// app.use((req, res, next)=>{
+//     req.sessionStore.all((error, sessions) => {
+//         console.log(sessions);
+//         next();
+//     });
+// });
+
+app.use(localsMiddleware);
 
 app.use("/", rootRouter);
 app.use("/users", usersRouter);

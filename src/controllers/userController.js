@@ -1,4 +1,5 @@
 import User from "../models/User";
+import bcrypt from "bcrypt";
 //root Router
 export const getJoin = (req, res) => { 
     res.render("join", {pageTitle : "Join"});
@@ -33,9 +34,13 @@ export const getLogin = (req, res) => {
 
 export const postLogin = async (req, res) => {
     const {email, password} = req.body;
-    const emailExists = await User.exists({email});
-    if(!emailExists){
+    const user = await User.findOne({email});
+    if(!user){
         return res.status(400).render("login", {pageTitle : "Login", errorMessage : "An account with this email does not exists"});
+    }
+    const checkPassword = await bcrypt.compare(password, user.password);
+    if(!checkPassword){
+        return res.status(400).render("login", {pageTitle : "Login", errorMessage : "An account with this password does not exists"});
     }
     res.redirect("/")
 };

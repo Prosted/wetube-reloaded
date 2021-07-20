@@ -21,17 +21,11 @@ app.set("view engine", "pug");
 app.use(express.urlencoded({extended:true}));
 app.use(session({
     secret:"Hello!",
-    resave : true,
-    saveUninitialized : true,
+    resave : false,
+    saveUninitialized : false, /*saveUninitialized : true < 따로 값을 설정하지 않은 전달 받은 날 것의 세션을 즉시 Store에 저장 후 세션 주인에게 쿠키를 (답장하듯) 넘겨 준다.
+    saveUninitialized : false < req.session 속 값을 수정하는 그 순간에 세션을 Store에 저장 후 그제야 쿠키를 전달한다.*/
     store: MongoStore.create({mongoUrl : "mongodb://127.0.0.1:27017/wetube"}),
 }));
-
-// app.use((req, res, next)=>{
-//     req.sessionStore.all((error, sessions) => {
-//         console.log(sessions);
-//         next();
-//     });
-// });
 
 app.use(localsMiddleware);
 

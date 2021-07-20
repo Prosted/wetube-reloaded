@@ -44,7 +44,7 @@ export const postLogin = async (req, res) => {
     }
     req.session.loggedIn = true;
     req.session.user=user;
-    res.redirect("/")
+    res.redirect("/");
 };
 
 export const logout = (req, res) => res.send("Logout");

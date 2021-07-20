@@ -7,8 +7,6 @@ import rootRouter from "./routers/rootRouter";
 import usersRouter from "./routers/userRouter";
 import videoRouter from "./routers/videoRouter";
 
-console.log(process.env);
-
 const app = express(); //express함수로 익스프레스 앱을 만듬
 
 const logger = morgan("combined");

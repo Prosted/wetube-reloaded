@@ -19,6 +19,7 @@ html(lang = "ko")
                         li
                             a(href="/logout") Logout 
                         li 
+                            img(src=`${loggedInUser.avatarUrl}`, alt="")
                             a(href="/my-profile") see #{loggedInUser.name}'s profile
                     else
                         li 

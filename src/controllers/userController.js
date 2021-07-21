@@ -35,8 +35,8 @@ export const getLogin = (req, res) => {
 
 export const postLogin = async (req, res) => {
     const {email, password} = req.body;
-    const user = await User.findOne({email});
-    if(!user || user.socialOnly){
+    const user = await User.findOne({email, socialOnly:false});
+    if(!user){
         return res.status(400).render("login", {pageTitle : "Login", errorMessage : "An account with this email does not exists"});
     }
     const checkPassword = await bcrypt.compare(password, user.password);
@@ -48,7 +48,10 @@ export const postLogin = async (req, res) => {
     res.redirect("/");
 };
 
-export const logout = (req, res) => res.send("Logout");
+export const logout = (req, res) => {
+    req.session.destroy();
+    return res.redirect("/");
+};
 
 //user Router
 export const edit = (req, res) => res.send("Edit User");
@@ -103,24 +106,21 @@ export const finishGithubLogin = async(req, res) => {
     if(!emailObj){
         return res.redirect("/login");
     }
-    const existingUser = await User.findOne({email : emailObj.email});
-    if(existingUser){
-        req.session.loggedIn = true;
-        req.session.user=existingUser;
-        return res.redirect("/");
-    }else{
-        const user = await User.create({
+    let user = await User.findOne({email : emailObj.email});
+    if(!user){
+        user = await User.create({
             name : userData.name,
             email : emailObj.email,
+            avatarUrl : userData.avatar_url,
             userName : userData.name,
             password : "",
             location : userData.location,
             socialOnly:true,
         });
-        req.session.loggedIn = true;
-        req.session.user=user;
-        return res.redirect("/");
     }
+    req.session.loggedIn = true;
+    req.session.user=user;
+    return res.redirect("/");
     }else{
         return res.redirect("/login");
     }

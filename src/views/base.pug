@@ -21,6 +21,8 @@ html(lang = "ko")
                         li 
                             img(src=`${loggedInUser.avatarUrl}`, alt="")
                             a(href="/my-profile") see #{loggedInUser.name}'s profile
+                        li 
+                            a(href="/users/edit") Edit Profile 
                     else
                         li 
                             a(href="/join") Join

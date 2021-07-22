@@ -2,7 +2,7 @@ import express from "express";
 import session from "express-session";
 import MongoStore from "connect-mongo";
 import morgan from "morgan";
-import { localsMiddleware } from "./middlewares";
+import { localsMiddleware, protectorMiddleware } from "./middlewares";
 import rootRouter from "./routers/rootRouter";
 import usersRouter from "./routers/userRouter";
 import videoRouter from "./routers/videoRouter";

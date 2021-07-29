@@ -129,7 +129,7 @@ export const getEdit = (req, res) => {
 export const postEdit = async (req, res) => {
     const {
         session:{
-           user: {_id, sessionUserName, sessionEmail},
+           user: {_id, userName : sessionUserName, email : sessionEmail},
         },
         body:{name, userName, email, location},
     } = req;
@@ -142,8 +142,8 @@ export const postEdit = async (req, res) => {
     }
     if(search.length > 0){
         const existsUser = await User.findOne({$or:search});
-        if(existsUser && existsUser._id.toString() === _id){
-            return res.render("edit-profile", {pageTitle:"Edit Profile", errorMessage:"This username/email is already taken."});
+        if(existsUser && existsUser._id.toString() !== _id){
+            return res.status(400).render("edit-profile", {pageTitle:"Edit Profile", errorMessage:"This username/email is already taken."});
         }
     }
     const user = await User.findByIdAndUpdate(_id, {
@@ -155,5 +155,24 @@ export const postEdit = async (req, res) => {
     req.session.user = user;
     return res.redirect("/users/edit");
 };
+
+export const getChangePassword = (req, res) => {
+    const {
+        session :{
+            user :{socialOnly},
+        }
+    } =req;
+    if(socialOnly){
+        return res.redirect("/");
+    }
+    return res.render("change-password", {pageTitle:"Change Password"});
+}
+
+export const postChangePassword = (req, res) => {
+    //password change notification
+    return res.redirect("/users/edit");
+}
+
+
 export const remove = (req, res) => res.send("Remove User");
 export const see = (req, res) => res.send("see User's Profile");

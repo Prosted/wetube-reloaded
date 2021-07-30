@@ -192,4 +192,11 @@ export const postChangePassword = async (req, res) => {
 
 
 export const remove = (req, res) => res.send("Remove User");
-export const see = (req, res) => res.send("see User's Profile");
+export const see = async (req, res) => {
+    const {id} = req.params;
+    const user = await User.findById(id);
+    if(!user){
+        return res.status(400).render("error", {pageTitle:"User Not Found"});
+    }
+    return res.render("profile", {pageTitle:`${user.userName}의 Profile`});
+}

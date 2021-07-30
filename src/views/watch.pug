@@ -6,10 +6,9 @@ block content
     div
         p=video.description
         small=video.createdAt
-        br
-        if owner 
-            a(href=`/users/${owner._id}`) #{owner.userName}의 Profile &rarr;
-    if String(loggedInUser._id)===String(video.owner)
+        br  
+        a(href=`/users/${video.owner._id}`) Uploaded by #{video.owner.userName}
+    if String(loggedInUser._id)===String(video.owner._id)
         a(href=`${video.id}/edit`) Edit Video
         br
         a(href=`${video.id}/delete`) Delete Video

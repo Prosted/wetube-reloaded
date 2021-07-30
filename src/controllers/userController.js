@@ -1,4 +1,5 @@
 import User from "../models/User";
+import Video from "../models/Video";
 import bcrypt from "bcrypt";
 import fetch from "node-fetch";
 //root Router
@@ -190,13 +191,15 @@ export const postChangePassword = async (req, res) => {
     return res.redirect("/logout");
 }
 
-
-export const remove = (req, res) => res.send("Remove User");
 export const see = async (req, res) => {
     const {id} = req.params;
     const user = await User.findById(id);
     if(!user){
         return res.status(400).render("error", {pageTitle:"User Not Found"});
     }
-    return res.render("profile", {pageTitle:`${user.userName}의 Profile`});
+    const videos = await Video.find({owner:user._id});
+    console.log(videos);
+    return res.render("profile", {pageTitle:`${user.userName}의 Profile`, videos});
 }
+
+export const remove = (req, res) => res.send("Remove User");

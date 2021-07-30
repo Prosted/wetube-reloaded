@@ -20,11 +20,10 @@ export const search = async(req, res) =>{
 //video Router
 export const watch = async(req, res) => {
     const {id} = req.params;
-    const video = await Video.findById(id);
-    const owner = await User.findById(video.owner);
+    const video = await Video.findById(id).populate("owner");
     if(!video)
         return res.render("error", {pageTitle:"Video not Found"});
-    return res.render("watch", {pageTitle : `watch ${video.title}`, video, owner});
+    return res.render("watch", {pageTitle : `watch ${video.title}`, video});
 };
 
 export const getEdit = async(req, res) => {

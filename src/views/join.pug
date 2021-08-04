@@ -1,18 +1,18 @@
 extends base
 
+
 block content
     if errorMessage
         span=errorMessage
-    form(action="", method="POST")
-        input(name="name", type="text", required, placeholder="Name")
-        input(name="email", type="email", required, placeholder="Email")
-        input(name="userName", type="text", required, placeholder="User Name")
-        input(name="password", type="password", required, placeholder="Password")
-        input(name="password2", type="password", required, placeholder="Password2")
-        input(name="location", type="text", required, placeholder="Location")
+    form(method="POST")
+        input(placeholder="Name", name="name", type="text", required)
+        input(placeholder="Email", name="email", type="email", required)
+        input(placeholder="Username", name="userName", type="text", required)
+        input(placeholder="Password", name="password", type="password", required)
+        input(placeholder="Confirm Password", name="password2", type="password", required)
+        input(placeholder="Location", name="location", type="text", required)
         input(type="submit", value="Join")
-
-        hr 
-        div 
-            h5 Already have an account?
-            a(href="/login") Log in now &rarr;
+        include partials/social-login
+    div.auth-switch
+        span Already have an account? 
+        a(href="/login") Log in now &rarr;

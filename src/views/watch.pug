@@ -1,15 +1,14 @@
 extends base
 
-
-block content 
-    video(src=`/${video.fileUrl}`, controls) 
+block content
+    video(src="/" + video.fileUrl, controls)
     div
         p=video.description
         small=video.createdAt
-        br  
-        a(href=`/users/${video.owner._id}`) Uploaded by #{video.owner.userName}
-    if String(loggedInUser._id)===String(video.owner._id)
-        a(href=`${video.id}/edit`) Edit Video
+    div
+        small Uploaded by 
+            a(href=`/users/${video.owner._id}`)=video.owner.name
+    if String(video.owner._id) === String(loggedInUser._id)
+        a(href=`${video.id}/edit`) Edit Video &rarr;
         br
-        a(href=`${video.id}/delete`) Delete Video
-
+        a(href=`${video.id}/delete`) Delete Video &rarr;

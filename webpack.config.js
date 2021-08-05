@@ -2,14 +2,17 @@ const path = require("path");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
-    entry : "./src/client/js/main.js",
+    entry : {
+        home : "./src/client/js/main.js",
+        videoPlayer : "./src/client/js/videoPlayer.js",
+    },
     mode : "development",
     watch : false, //에러 때문에 임시로 false 사용. 자동갱신을 위해서는 true 사용 
     plugins: [new MiniCssExtractPlugin({
         filename : "css/styles.css",
     })],
     output : {
-        filename : "js/main.js",
+        filename : "js/[name].js",
         path : path.resolve(__dirname, "assets"),
         clean : true,
     },

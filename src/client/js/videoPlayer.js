@@ -12,13 +12,21 @@ const handlePlayBtn = (event) => {
     else{
         video.pause();
     }
+    playBtn.innerHTML = video.paused ? "Play" : "Pause";
 }
 
-const handlePause = (event) => playBtn.innerHTML = "Pause";
-const handlePlay = (event) => playBtn.innerHTML = "Play";
+const handleMute = (event) => {
+    if(video.muted){
+        video.muted = false;
+        volume.value = 0.5;
+    }else{
+        video.muted = true;
+        volume.value = 0;
+    }
+    muteBtn.innerHTML = video.muted ? "UnMute" : "Mute";
+}
+
 
 playBtn.addEventListener("click", handlePlayBtn);
-video.addEventListener("play", handlePlay);
-video.addEventListener("pause", handlePause);
 muteBtn.addEventListener("click", handleMute);
 

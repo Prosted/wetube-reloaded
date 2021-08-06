@@ -71,9 +71,6 @@ const handleTimeUpdate = () => {
     const videoTotalTime = Math.floor(video.duration);
     timeLine.value = videoCurrentTime;
     currenTime.innerText = formatTime(Math.floor(video.currentTime));
-    if(videoCurrentTime === videoTotalTime){
-        resetVideoTime();
-    }
 };
 
 const resetVideoTime = () => {
@@ -147,7 +144,10 @@ const handleSpacebar = (event) => {
 
 const handleEnded = (event) => {
     const {id} = videoContainer.dataset;
-    fetch(`/api/videos/${id}/view`, {method:"POST"});
+    fetch(`/api/videos/${id}/view`, {
+        method:"POST"
+    });
+    resetVideoTime();
 }
 
 playBtn.addEventListener("click", handlePlayBtn);

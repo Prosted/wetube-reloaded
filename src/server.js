@@ -6,6 +6,7 @@ import { localsMiddleware, protectorMiddleware } from "./middlewares";
 import rootRouter from "./routers/rootRouter";
 import usersRouter from "./routers/userRouter";
 import videoRouter from "./routers/videoRouter";
+import apiRouter from "./routers/apiRouter";
 
 const app = express(); //express함수로 익스프레스 앱을 만듬
 
@@ -30,6 +31,7 @@ app.use("/static", express.static("assets"));
 app.use("/", rootRouter);
 app.use("/users", usersRouter);
 app.use("/videos", videoRouter);
+app.use("/api", apiRouter);
 
 export default app;
 

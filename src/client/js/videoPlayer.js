@@ -12,6 +12,8 @@ const fullScreenBtn = document.getElementById("fullScreen");
 const fullScreenBtnIcon = fullScreenBtn.querySelector("i");
 const videoControllers = document.getElementById("videoControllers");
 
+
+
 let controllersTimeOut;
 let controllersMoveMentTimeOut;
 let volumeValue =0.5;

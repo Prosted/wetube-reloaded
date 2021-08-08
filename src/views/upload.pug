@@ -2,7 +2,7 @@ extends base
 
 block content
     video#preview
-    button#recorder.recorder Record
+    button#recorder.recorder Start Recording
     if errorMessage
         span=errorMessage
     form(method="POST", enctype="multipart/form-data")

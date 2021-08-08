@@ -43,7 +43,7 @@ const handleDownload = (event) => {
 
 
 const init = async () => {
-    stream = await navigator.mediaDevices.getUserMedia({audio : false, video : {width : 300, height : 200}});
+    stream = await navigator.mediaDevices.getUserMedia({audio : false, video : true});
     video.srcObject = stream;
     video.play();
 }

@@ -62,6 +62,12 @@ const handleDownload = async (event) => {
     thumbnailLink.click();
     
     //remove all link
+    ffmpeg.FS("unlink", "output.mp4");
+    ffmpeg.FS("unlink", "Thumbnail.jpg");
+    ffmpeg.FS("unlink", "recorder.webm");
+    URL.revokeObjectURL(mp4Url);
+    URL.revokeObjectURL(thumbnailUrl);
+    URL.revokeObjectURL(videoFile);
     body.removeChild(videoLink);
     body.removeChild(thumbnailLink);
 

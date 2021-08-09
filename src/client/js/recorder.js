@@ -34,20 +34,41 @@ const handleDownload = async (event) => {
     const ffmpeg = createFFmpeg({log:true});
     await ffmpeg.load();
     ffmpeg.FS("writeFile", "recorder.webm", await fetchFile(videoFile));
+
     await ffmpeg.run("-i", "recorder.webm", "-r", "60", "output.mp4");
+    await ffmpeg.run("-i", "recorder.webm", "-ss", "00:00:01", "-frames:v", "1", "Thumbnail.jpg");
+
     const mp4File = ffmpeg.FS("readFile", "output.mp4");
+    const thumbnailFile = ffmpeg.FS("readFile", "Thumbnail.jpg");
+
     const mp4Blob = new Blob([mp4File.buffer], {type:"video/mp4"});
-    console.log(mp4Blob);
+    const thumbnailBlob = new Blob([thumbnailFile.buffer], {type:"image/jpg"});
+
     const mp4Url = URL.createObjectURL(mp4Blob);
-    const a = document.createElement("a");
-    a.href=mp4Url;
-    a.download = "My Video";
-    body.appendChild(a);
-    a.click();
+    const thumbnailUrl = URL.createObjectURL(thumbnailBlob);
+
+    //video download
+    const videoLink = document.createElement("a");
+    videoLink.href=mp4Url;
+    videoLink.download = "My Video.mp4";
+    body.appendChild(videoLink);
+    videoLink.click();
+    
+    //thumbnail download
+    const thumbnailLink = document.createElement("a");
+    thumbnailLink.href =  thumbnailUrl;
+    thumbnailLink.download =  "My Thumbnail.jpg";
+    body.appendChild(thumbnailLink);
+    thumbnailLink.click();
+    
+    //remove all link
+    body.removeChild(videoLink);
+    body.removeChild(thumbnailLink);
+
+    //init
     recorderBtn.innerText = "Start Recording";
     recorderBtn.removeEventListener("click", handleDownload);
     recorderBtn.addEventListener("click", handleStart);
-    body.removeChild(a);
     init();
 }
 

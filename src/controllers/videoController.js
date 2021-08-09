@@ -91,6 +91,7 @@ export const postUpload = async(req, res) => {
         const user = await User.findById(_id);
         user.videos.push(newVideo._id);
         await user.save();
+        req.flash("success", "video is successfully upload");
         return res.redirect("/");
     }catch(error){
         return res.status(400).render("upload", {pageTitle: "upload", errorMessage : error._message});
@@ -113,6 +114,7 @@ export const deleteVideo = async(req, res) =>{
         return res.status(403).redirect("/");
     }
     await Video.findByIdAndDelete(id);
+    req.flash("success", "video is successfully delete");
     return res.redirect("/");
 }
 

@@ -24,6 +24,7 @@ export const postJoin = async (req, res) => {
             password,
             location,
         })
+        req.flash("success", "we create your accout please login");
         res.redirect("/login");
     }catch(error){
         res.status(400).render("error", {pageTitle : "Server Error", errorMessage : error._message});
@@ -46,10 +47,12 @@ export const postLogin = async (req, res) => {
     }
     req.session.loggedIn = true;
     req.session.user=user;
+    req.flash("success", "login success");
     res.redirect("/");
 };
 
 export const logout = (req, res) => {
+    console.log("logout");
     req.session.destroy();
     req.flash("info", "Bye Bye");
     return res.redirect("/");
@@ -119,6 +122,7 @@ export const finishGithubLogin = async(req, res) => {
         }
         req.session.loggedIn = true;
         req.session.user=user;
+        req.flash("success", "social login success");
         return res.redirect("/");
     }else{
         return res.redirect("/login");
@@ -158,6 +162,7 @@ export const postEdit = async (req, res) => {
         location,
     }, {new : true});
     req.session.user = user;
+    req.flash("success", "Edit suceess");
     return res.redirect("/users/edit");
 };
 
@@ -191,7 +196,7 @@ export const postChangePassword = async (req, res) => {
     }
     user.password = newPassword;
     await user.save();
-    req.flash("info", "Password Changed");
+    alert("password changed successfully");
     return res.redirect("/logout");
 }
 

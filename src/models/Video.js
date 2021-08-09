@@ -10,6 +10,7 @@ export const formatVideo = (hashtags) => {
 const videoSchema = new mongoose.Schema({
     title : {type : String, required : true, trim : true, uppercase : true},
     fileUrl : {type:String, required:true},
+    thumbUrl : {type:String, required:true},
     description : {type : String, required : true},
     createdAt : {type:Date, required : true, default : Date.now},
     hashtags:[{type : String}], //문자열 배열 타입

@@ -16,9 +16,9 @@ let recorder;
 let videoFile;
 
 const handleStart = (event) => {
-    actionBtn.innerText = "Stop Recording";
-    actionBtn.removeEventListener("click", handleStart);
-    actionBtn.addEventListener("click", handleStop);
+    actionBtn.innerText = "Recording now...";
+    // actionBtn.removeEventListener("click", handleStart);
+    // actionBtn.addEventListener("click", handleStop);
     recorder = new MediaRecorder(stream);
     recorder.ondataavailable= (event)=>{
         videoFile = URL.createObjectURL(event.data);
@@ -26,16 +26,21 @@ const handleStart = (event) => {
         video.srcObject=null;
         video.loop = true;
         video.play();
+        handleDownload();
     };
     recorder.start();
+    setTimeout(()=>{
+        recorder.stop();
+    }, 5000);
 }
-
+/*
 const handleStop = (event) => {
     actionBtn.innerText = "Download";
     actionBtn.removeEventListener("click", handleStop);
     actionBtn.addEventListener("click", handleDownload);
     recorder.stop();
 }
+*/
 
 const downloadFile = (fileUrl, fileName) =>{
     const a = document.createElement("a");
@@ -46,7 +51,7 @@ const downloadFile = (fileUrl, fileName) =>{
     body.removeChild(a);
 }
 
-const handleDownload = async (event) => {
+const handleDownload = async () => {
     actionBtn.innerText = "Translating...";
     actionBtn.disabled = true;
 
@@ -80,15 +85,21 @@ const handleDownload = async (event) => {
 
     //init
     actionBtn.innerText = "Start Recording";
-    actionBtn.removeEventListener("click", handleDownload);
-    actionBtn.addEventListener("click", handleStart);
+    // actionBtn.removeEventListener("click", handleDownload);
+    // actionBtn.addEventListener("click", handleStart);
     actionBtn.disabled=false;
     init();
 }
 
 
 const init = async () => {
-    stream = await navigator.mediaDevices.getUserMedia({audio : false, video : true});
+    stream = await navigator.mediaDevices.getUserMedia({
+        audio : false, 
+        video : {
+            width : 1024, 
+            height : 576,
+        },
+    });
     video.srcObject = stream;
     video.play();
 }

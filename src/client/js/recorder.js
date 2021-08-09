@@ -35,10 +35,13 @@ const handleDownload = async (event) => {
     await ffmpeg.load();
     ffmpeg.FS("writeFile", "recorder.webm", await fetchFile(videoFile));
     await ffmpeg.run("-i", "recorder.webm", "-r", "60", "output.mp4");
-
+    const mp4File = ffmpeg.FS("readFile", "output.mp4");
+    const mp4Blob = new Blob([mp4File.buffer], {type:"video/mp4"});
+    console.log(mp4Blob);
+    const mp4Url = URL.createObjectURL(mp4Blob);
     const a = document.createElement("a");
-    a.href=videoFile;
-    a.download = "My Video💚.webm";
+    a.href=mp4Url;
+    a.download = "My Video";
     body.appendChild(a);
     a.click();
     recorderBtn.innerText = "Start Recording";

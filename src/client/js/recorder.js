@@ -16,9 +16,9 @@ let recorder;
 let videoFile;
 
 const handleStart = (event) => {
-    actionBtn.innerText = "Recording now...";
-    // actionBtn.removeEventListener("click", handleStart);
-    // actionBtn.addEventListener("click", handleStop);
+    actionBtn.innerText = "Stop Recording";
+    actionBtn.removeEventListener("click", handleStart);
+    actionBtn.addEventListener("click", handleStop);
     recorder = new MediaRecorder(stream);
     recorder.ondataavailable= (event)=>{
         videoFile = URL.createObjectURL(event.data);
@@ -26,21 +26,17 @@ const handleStart = (event) => {
         video.srcObject=null;
         video.loop = true;
         video.play();
-        handleDownload();
     };
     recorder.start();
-    setTimeout(()=>{
-        recorder.stop();
-    }, 5000);
 }
-/*
+
 const handleStop = (event) => {
     actionBtn.innerText = "Download";
     actionBtn.removeEventListener("click", handleStop);
     actionBtn.addEventListener("click", handleDownload);
     recorder.stop();
 }
-*/
+
 
 const downloadFile = (fileUrl, fileName) =>{
     const a = document.createElement("a");
@@ -52,7 +48,7 @@ const downloadFile = (fileUrl, fileName) =>{
 }
 
 const handleDownload = async () => {
-    actionBtn.innerText = "Translating...";
+    actionBtn.innerText = "Downloading..";
     actionBtn.disabled = true;
 
     const ffmpeg = createFFmpeg({log:true});
@@ -85,8 +81,8 @@ const handleDownload = async () => {
 
     //init
     actionBtn.innerText = "Start Recording";
-    // actionBtn.removeEventListener("click", handleDownload);
-    // actionBtn.addEventListener("click", handleStart);
+    actionBtn.removeEventListener("click", handleDownload);
+    actionBtn.addEventListener("click", handleStart);
     actionBtn.disabled=false;
     init();
 }

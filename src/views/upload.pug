@@ -3,7 +3,7 @@ extends base
 block content
     div.recordContainer
         video#preview.preview
-        span#recorder.recorder Start Recording
+        button#recorder.recorder Start Recording
     if errorMessage
         span=errorMessage
     form(method="POST", enctype="multipart/form-data")

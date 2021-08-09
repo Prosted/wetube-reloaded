@@ -1,5 +1,6 @@
 import express from "express";
 import session from "express-session";
+import flash from 'express-flash',
 import MongoStore from "connect-mongo";
 import morgan from "morgan";
 import { localsMiddleware, protectorMiddleware } from "./middlewares";
@@ -25,6 +26,7 @@ app.use(session({
     store: MongoStore.create({mongoUrl : process.env.DB_URL}),
 }));
 
+app.use(flash());
 app.use(localsMiddleware);
 app.use("/uploads", express.static("uploads"));
 app.use("/static", express.static("assets"));

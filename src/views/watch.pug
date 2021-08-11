@@ -37,5 +37,6 @@ block content
                 button Add Comment
 
 block script
-    script(src="/static/js/videoPlayer.js") 
-    script(src="/static/js/commentSection.js")
+    script(src="/static/js/videoPlayer.js")
+    if loggedIn
+        script(src="/static/js/commentSection.js")

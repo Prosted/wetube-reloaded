@@ -1,5 +1,6 @@
 import User from "../models/User";
 import Video from "../models/Video";
+import Comment from "../models/Comment";
 
 
 //root Router
@@ -129,9 +130,22 @@ export const registerView = async (req, res) => {
     return res.sendStatus(200);
 } 
 
-export const createComment = (req, res) => {
-    console.log(req.params);
-    console.log(req.body);
-    console.log(req.body.text, req.body.rating);
-    return res.end();
+export const createComment = async (req, res) => {
+    const {
+        body : {text},
+        params : {id},
+        session : {user}
+    } =req;
+    const video = await Video.findById(id);
+    if(!video){
+        return res.sendStatus(404);
+    }
+    const newComment = await Comment.create({
+        text,
+        createdAt : new Date(),
+        video : id,
+        owner : user._id,
+    });
+    console.log(newComment);
+    return res.sendStatus(201);
 }

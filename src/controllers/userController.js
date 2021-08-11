@@ -208,7 +208,8 @@ export const see = async (req, res) => {
           path: "owner",
           model: "User",
         },
-      });
+      }).populate("comments");
+    console.log(user);
     if(!user){
         return res.status(400).render("error", {pageTitle:"User Not Found"});
     }

@@ -6,16 +6,19 @@ const handleSubmit = (event) => {
     event.preventDefault();
     const textarea = form.querySelector("textarea");
     const text = textarea.value;
-    const video = videoContainer.dataset.id;
-    fetch(`/api/videos/${video}/comment`, {
-        method : "POST",
-        body : {
-            text,
+    if(text===""){
+        return;
+    }
+    const videoId = videoContainer.dataset.id;
+    fetch(`/api/videos/${videoId}/comment`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
         },
-    });
+        body: JSON.stringify({ text }),
+      });
 }
 
 if(form){
-    console.log("hey!!!!!!!!!!!!!!!!!!");
     form.addEventListener("submit", handleSubmit);
 }

@@ -167,9 +167,11 @@ const deleteCommentId = async (obj, id) => {
 
 
 export const deleteComment = async (req, res) => {
-    const {id} =req.body;
-    const comment = await Comment.findByIdAndDelete(id);
-    console.log(comment);
+    const {
+        body :{id},
+        session :{user},
+    } =req;
+    const comment = await Comment.findById(id);
     const {video, owner} = comment;
     const videoObject = await Video.findById(video); 
     const ownerObject = await User.findById(owner);

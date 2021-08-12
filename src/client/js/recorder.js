@@ -17,9 +17,10 @@ let videoFile;
 
 const handleStart = (event) => {
     actionBtn.innerText = "Recording now...";
+    actionBtn.disabled = true;
     // actionBtn.removeEventListener("click", handleStart);
     // actionBtn.addEventListener("click", handleStop);
-    recorder = new MediaRecorder(stream);
+    recorder = new MediaRecorder(stream, { mimeType: "video/webm" });
     recorder.ondataavailable= (event)=>{
         videoFile = URL.createObjectURL(event.data);
         video.src=videoFile;
@@ -28,8 +29,9 @@ const handleStart = (event) => {
         video.play();
         handleDownload();
     };
+    recorder.start();
     setTimeout(()=>{
-        recorder.start();
+        recorder.stop();
     }, 3000);
 }
 /*
@@ -52,9 +54,8 @@ const downloadFile = (fileUrl, fileName) =>{
 }
 
 const handleDownload = async () => {
-    actionBtn.innerText = "Translating..";
-    actionBtn.disabled = true;
-
+    actionBtn.innerText = "Translating...";
+    
     const ffmpeg = createFFmpeg({log:true});
     await ffmpeg.load();
     ffmpeg.FS("writeFile", files.input, await fetchFile(videoFile));

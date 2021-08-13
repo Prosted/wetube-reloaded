@@ -10,8 +10,6 @@ module.exports = {
         recorder : BASE_URL+"recorder.js",
         commentSection : BASE_URL+"commentSection.js",
     },
-    mode : "development",
-    watch : false, //에러 때문에 임시로 false 사용. 자동갱신을 위해서는 true 사용 
     plugins: [new MiniCssExtractPlugin({
         filename : "css/styles.css",
     })],
